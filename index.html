@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Weeather</title>
+        <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap" rel="stylesheet">
+        <link href="./assets/styles/main.css" rel="stylesheet" />
+        <script src="./assets/scripts/main.js" type="module" defer></script>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <!-- web-component - colors: default & white -->
+                <app-logo data-color="white"></app-logo>
+            </div>
+        </header>
+        <section id="weather">
+            <main>
+                <p class="weather__city">Nova Odessa</p>
+                <p class="weather__degrees">19°</p>
+                <p class="weather__climate">Clear</p>
+            </main>
+
+            <div class="weather__forecast" aria-expanded="false">
+                <a class="weather__open-weather-menu" href="#">
+                    <i class="uil uil-angle-up"></i>
+                    <span>More about</span>
+                </a>
+
+                <nav class="weather__forecast-menu">
+                    <div class="container">
+                        <h2>Weather Forecast</h2>
+
+                        <ul class="weather__choose-day">
+                            <li active>
+                                <a href="#">Today</a>
+                            </li>
+                            <li>
+                                <a href="#">Tomorrow</a>
+                            </li>
+                        </ul>
+    
+                        <ul class="weather__forecast-list weather__forecast-list--today">
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">00:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">01:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">02:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">03:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">04:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">05:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">06:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">07:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">08:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">09:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">10:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">11:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">12:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">13:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-sun"></i>
+                                <p class="weather__forecast-time">14:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-cloud-sun"></i>
+                                <p class="weather__forecast-time">15:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-cloud-sun-rain-alt"></i>
+                                <p class="weather__forecast-time">16:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-clouds"></i>
+                                <p class="weather__forecast-time">17:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-moon"></i>
+                                <p class="weather__forecast-time">18:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-cloud-moon"></i>
+                                <p class="weather__forecast-time">19:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-cloud-moon-rain"></i>
+                                <p class="weather__forecast-time">20:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-raindrops-alt"></i>
+                                <p class="weather__forecast-time">21:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-cloud-sun-meatball"></i>
+                                <p class="weather__forecast-time">22:00</p>
+                            </li>
+                            <li>
+                                <p class="weather__forecast-degrees">21°</p>
+                                <i class="uil uil-cloud-moon-meatball"></i>
+                                <p class="weather__forecast-time">23:00</p>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div> 
+        </section>
+    </body>
+</html>

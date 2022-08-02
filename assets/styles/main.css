@@ -1,0 +1,231 @@
+:root {
+    font-size: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    color: rgb(50, 50, 50);
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    width: min(1280px, 90%);
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 8rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+#weather {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-image: url('https://picsum.photos/1920/1080');
+    background-size: cover;
+    background-position: center;
+}
+
+#weather main {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+
+#weather main > * {
+    font-family: 'Raleway', sans-serif;
+    color: white;
+}
+
+#weather .weather__city {
+    font-size: 2rem;
+}
+
+#weather .weather__degrees {
+    font-size: 6rem;
+}
+
+#weather .weather__climate {
+    font-size: 1.6rem;
+    margin-top: 3rem;
+}
+
+#weather .weather__open-weather-menu > * {
+    color: white;
+}
+
+#weather .weather__open-weather-menu i {
+    font-size: 2rem;
+    position: relative;
+    bottom: 0;
+    animation: floating .5s linear infinite alternate;
+    transition: .7s;
+}
+
+#weather .weather__forecast {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    text-align: center;
+    transition: .7s;
+}
+
+#weather .weather__forecast[aria-expanded="false"] {
+    bottom: -25rem;
+}
+
+#weather .weather__forecast[aria-expanded="true"] {
+    bottom: 0;
+}
+
+#weather .weather__open-weather-menu {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .8rem;
+    margin-bottom: 3rem;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: white;
+}
+
+#weather .weather__forecast-menu {
+    width: 100%;
+    height: 25rem;
+    padding: 3rem 0;
+    background: white;
+    border-top-right-radius: 2.5rem;
+    border-top-left-radius: 2.5rem;
+}
+
+#weather .weather__forecast-menu h2 {
+    font-size: 1.8rem;
+    font-weight: 300;
+}
+
+#weather .weather__forecast-menu .weather__choose-day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .8rem;
+    margin: .8rem 0 1.6rem 0;
+    list-style: none;
+}
+
+#weather .weather__forecast-menu .weather__choose-day li a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 9rem;
+    height: 3rem;
+    text-decoration: none;
+    font-size: 1.3rem;
+    color: rgb(203, 209, 218);
+    border: .1rem solid rgb(203, 209, 218);
+    border-radius: 1.6rem;
+}
+
+#weather .weather__forecast-menu .weather__choose-day li[active] a {
+    color: rgb(50, 50, 50);
+    border-color: rgb(50, 50, 50);
+}
+
+#weather .weather__forecast-menu .weather__forecast-list {
+    display: flex;
+    gap: 1.6rem;
+    margin-top: 1.2rem;
+    list-style: none;
+    overflow-x: scroll;
+}
+
+#weather .weather__forecast-menu .weather__forecast-list::-webkit-scrollbar {
+    display: none;
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li {
+    padding: 1.4rem;
+    border-radius: .4rem;
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li:first-of-type {
+    padding-left: 0;
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li:last-of-type {
+    padding-right: 0;
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li .weather__forecast-degrees {
+    font-size: 1.1rem;
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li i {
+    font-size: 5.3rem;
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li i.uil-sun {
+    color: orange
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-sun {
+    color: rgb(214, 153, 84)
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-sun-rain-alt,
+#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-moon-rain {
+    color: rgb(135, 110, 226)
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li i.uil-clouds {
+    color: rgb(154, 203, 231)
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li i.uil-moon {
+    color: rgb(181, 195, 204)
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-moon {
+    color: rgb(141, 157, 167)
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li i.uil-raindrops-alt {
+    color: rgb(167, 147, 240)
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-sun-meatball,
+#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-moon-meatball {
+    color: rgb(221, 226, 231)
+}
+
+#weather .weather__forecast-menu .weather__forecast-list li .weather__forecast-time {
+    font-size: 1.1rem;
+    margin-top: .4rem;
+}
+
+@keyframes floating {
+    from {
+        bottom: 0;
+    }
+
+    to {
+        bottom: .5rem;
+    }
+}
