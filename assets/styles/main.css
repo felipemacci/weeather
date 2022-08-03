@@ -20,6 +20,13 @@ html, body {
     margin: 0 auto;
 }
 
+.logo .logo__text {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 3rem;
+    font-weight: 500;
+    color: white;
+}
+
 header {
     display: flex;
     align-items: center;
