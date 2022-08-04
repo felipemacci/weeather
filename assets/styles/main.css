@@ -110,7 +110,40 @@ header form button {
     margin-top: 3rem;
 }
 
+#weather .weather__forecast {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    text-align: center;
+    transition: .7s;
+}
+
+#weather .weather__forecast[aria-expanded="false"] {
+    bottom: -25rem;
+}
+
+#weather .weather__forecast[aria-expanded="true"] {
+    bottom: 0;
+}
+
+#weather .weather__forecast[aria-expanded="true"] .weather__open-weather-menu i {
+    transform: rotate(180deg);
+}
+
+#weather .weather__forecast[aria-expanded="true"] .weather__open-weather-menu span {
+    display: none;
+}
+
 #weather .weather__open-weather-menu {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .8rem;
+    margin-bottom: 3rem;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: white;
     background: none;
     border: none;
     outline: none;
@@ -128,42 +161,6 @@ header form button {
     transform: rotate(0);
     animation: floating .5s linear infinite alternate;
     transition: .7s;
-}
-
-#weather .weather__open-weather-menu[aria-expanded="true"] i {
-    transform: rotate(180deg);
-}
-
-#weather .weather__open-weather-menu[aria-expanded="true"] span {
-    display: none;
-}
-
-#weather .weather__forecast {
-    width: 100%;
-    position: absolute;
-    left: 0;
-    text-align: center;
-    transition: .7s;
-}
-
-#weather .weather__forecast[aria-expanded="false"] {
-    bottom: -25rem;
-}
-
-#weather .weather__forecast[aria-expanded="true"] {
-    bottom: 0;
-}
-
-#weather .weather__open-weather-menu {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .8rem;
-    margin-bottom: 3rem;
-    text-decoration: none;
-    font-size: 1.4rem;
-    font-weight: 300;
-    color: white;
 }
 
 #weather .weather__forecast-menu {
