@@ -8,7 +8,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap" rel="stylesheet">
         <link href="./assets/styles/main.css" rel="stylesheet" />
-        <script src="./assets/scripts/main.js" type="module" defer></script>
+        <script src="./assets/scripts/main.js" defer></script>
     </head>
     <body>
         <header>
@@ -16,6 +16,20 @@
                 <div class="logo">
                     <span class="logo__text">weeather</span>
                 </div>
+
+                <form>
+                    <input
+                        type="text"
+                        name="city"
+                        spellcheck="false"
+                        autocomplete="off"
+                        placeholder="Type your city here..."
+                    />
+
+                    <button type="submit">
+                        <i class="uil uil-search"></i>
+                    </button>
+                </form>
             </div>
         </header>
         <section id="weather">
@@ -26,10 +40,10 @@
             </main>
 
             <div class="weather__forecast" aria-expanded="false">
-                <a class="weather__open-weather-menu" href="#">
+                <button class="weather__open-weather-menu" onclick="toggleForecastExpansion()">
                     <i class="uil uil-angle-up"></i>
                     <span>More about</span>
-                </a>
+                </button>
 
                 <nav class="weather__forecast-menu">
                     <div class="container">
