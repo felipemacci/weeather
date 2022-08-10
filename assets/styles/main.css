@@ -232,42 +232,8 @@ header form button {
     font-size: 1.1rem;
 }
 
-#weather .weather__forecast-menu .weather__forecast-list li i {
-    font-size: 5.3rem;
-}
-
-#weather .weather__forecast-menu .weather__forecast-list li i.uil-sun {
-    color: orange
-}
-
-#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-sun {
-    color: rgb(214, 153, 84)
-}
-
-#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-sun-rain-alt,
-#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-moon-rain {
-    color: rgb(135, 110, 226)
-}
-
-#weather .weather__forecast-menu .weather__forecast-list li i.uil-clouds {
-    color: rgb(154, 203, 231)
-}
-
-#weather .weather__forecast-menu .weather__forecast-list li i.uil-moon {
-    color: rgb(181, 195, 204)
-}
-
-#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-moon {
-    color: rgb(141, 157, 167)
-}
-
-#weather .weather__forecast-menu .weather__forecast-list li i.uil-raindrops-alt {
-    color: rgb(167, 147, 240)
-}
-
-#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-sun-meatball,
-#weather .weather__forecast-menu .weather__forecast-list li i.uil-cloud-moon-meatball {
-    color: rgb(221, 226, 231)
+#weather .weather__forecast-menu .weather__forecast-list li img {
+    width: 5.3rem;
 }
 
 #weather .weather__forecast-menu .weather__forecast-list li .weather__forecast-time {
