@@ -75,7 +75,6 @@ const addForecastListItems = city => {
         const forecastedDegrees = getForecastedDegrees(city, counter)
         const icon = getDueForecastIcon(city, counter)
         const time = getForecastTime(i, cityTime)
-        console.log(city)
 
         const template = `
         <li>
@@ -118,13 +117,13 @@ const setError = error => {
     if(error.response) {
         switch(error.response.status) {
             case 404:
-                alert('Cidade não encontrada!')
+                alert('City not found!')
                 break
             case 429:
-                alert('Você excedeu o limite de 1000 chamadas diárias para a API. Caso queira continuar utilizando a aplicação, aguarde até amanhã ou insira uma nova chave.')
+                alert('You have exceeded the limit of 1000 daily API calls. If you want to continue using the application, wait until tomorrow or enter a new key.')
                 break
             default:
-                alert('Ocorreu um erro inesperado! Tente novamente mais tarde.')
+                alert('An unexpected error has occurred! Try again later.')
         }
     }
 }
