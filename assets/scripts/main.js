@@ -31,14 +31,11 @@ const updateInfos = data => {
     currentInfo.forEach((_, index) => changeInfo(mainDisplay[index], currentInfo[index]))
 }
 
-const getCurrentTime = () => {
-    const currentTime = new Date()
-    const currentUnixTime = currentTime.getTime().toString().slice(0, -3)
+const getCurrentTime = data => {
+    let currentTime = new Date().toLocaleString('pt-BR', { timeZone: `${data.timezone}` })
+    currentTime = parseInt(currentTime.split(' ')[1].slice(0, 2))
 
-    return {
-        currentTime,
-        currentUnixTime
-    }
+    return currentTime
 }
 
 const setLocateInfos = () => {
@@ -47,35 +44,38 @@ const setLocateInfos = () => {
         const lon = position.coords.longitude
 
         const currentLocation = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=bcfaab6c78be19a12909f0a481f4da85`
-        const currentClimateData = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&dt=${getCurrentTime().currentUnixTime}&units=metric&appid=bcfaab6c78be19a12909f0a481f4da85`
+        const currentClimateData = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=bcfaab6c78be19a12909f0a481f4da85`
 
-        fetch(currentLocation)
-        .then(res => res.json())
-        .then(data => {
+        axios.get(currentLocation)
+        .then(res => {
+            const data = res.data
             const cityName = data[0].name
 
-            fetch(currentClimateData)
-            .then(res => res.json())
-            .then(data => {
+            axios.get(currentClimateData)
+            .then(res => {
+                const data = res.data
                 data.cityName = cityName
 
                 updateInfos(data)
                 addForecastListItems(data)
             })
+            .catch(error => setError(error))
         })
+        .catch(error => setError(error))
     })
 }
 
 const addForecastListItems = city => {
     let counter = 1
-    const cityTime = getCurrentTime()
+    let cityTime = getCurrentTime(city)
 
     todayForecastList.innerHTML = null
 
-    for(let i = cityTime.currentTime.getHours(); i < 24; i++) {
+    for(let i = cityTime; i < 24; i++) {
         const forecastedDegrees = getForecastedDegrees(city, counter)
         const icon = getDueForecastIcon(city, counter)
-        const time = getForecastTime(i, cityTime.currentTime)
+        const time = getForecastTime(i, cityTime)
+        console.log(city)
 
         const template = `
         <li>
@@ -88,7 +88,6 @@ const addForecastListItems = city => {
         todayForecastList.innerHTML += template
         counter++
     }
-
 }
 
 const getForecastedDegrees = (city, hoursLeft) => {
@@ -100,7 +99,7 @@ const getDueForecastIcon = (city, hoursLeft) => {
 }
 
 const getForecastTime = (hour, cityTime) => {
-    if(hour == cityTime.getHours()) {
+    if(hour == cityTime) {
         return 'Now'
     } else {
         return (hour < 10 ? `0${hour}:00` : `${hour}:00`)
@@ -115,6 +114,21 @@ const toggleForecastExpansion = () => {
     }
 }
 
+const setError = error => {
+    if(error.response) {
+        switch(error.response.status) {
+            case 404:
+                alert('Cidade não encontrada!')
+                break
+            case 429:
+                alert('Você excedeu o limite de 1000 chamadas diárias para a API. Caso queira continuar utilizando a aplicação, aguarde até amanhã ou insira uma nova chave.')
+                break
+            default:
+                alert('Ocorreu um erro inesperado! Tente novamente mais tarde.')
+        }
+    }
+}
+
 forecastList.addEventListener('wheel', e => {
     e.deltaY > 0 ? forecastList.scrollLeft += 100 : forecastList.scrollLeft -= 100
 })
@@ -124,25 +138,27 @@ cityForm.addEventListener('submit', e => {
 
     const location = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput.value}&units=metric&appid=bcfaab6c78be19a12909f0a481f4da85`
 
-    fetch(location)
-    .then(res => res.json())
-    .then(data => {
+    axios.get(location)
+    .then(res => {
+        const data = res.data
         const lat = data.coord.lat
         const lon = data.coord.lon
 
-        const climateData = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&dt=${getCurrentTime().currentUnixTime}&units=metric&appid=bcfaab6c78be19a12909f0a481f4da85`
+        const climateData = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=bcfaab6c78be19a12909f0a481f4da85`
 
         const cityName = data.name
 
-        fetch(climateData)
-        .then(res => res.json())
-        .then(data => {
+        axios.get(climateData)
+        .then(res => {
+            const data = res.data
             data.cityName = cityName
 
             updateInfos(data)
             addForecastListItems(data)
         })
+        .catch(error => setError(error))
     })
+    .catch(error => setError(error))
 })
 
 setLocateInfos()
