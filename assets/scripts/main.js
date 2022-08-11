@@ -3,13 +3,15 @@ const cityInput = document.querySelector('header form input')
 
 const forecastNavigation = document.querySelector('.weather__forecast')
 const forecastExpander = document.querySelector('.weather__forecast .weather__open-weather-menu')
-const forecastList = document.querySelector('.weather__forecast-menu .weather__forecast-list')
+const forecastList = document.querySelectorAll('.weather__forecast-menu .weather__forecast-list')
+const forecastListChanger = document.querySelectorAll('#weather .weather__forecast-menu .weather__choose-day li a')
 
 const currentCity = document.querySelector('#weather .weather__city')
 const currentTemperature = document.querySelector('#weather .weather__degrees')
 const currentClimate = document.querySelector('#weather .weather__climate')
 
 const todayForecastList = document.querySelector('.weather__forecast-list--today')
+const tomorrowForecastList = document.querySelector('.weather__forecast-list--tomorrow')
 
 const mainDisplay = [ currentCity, currentTemperature, currentClimate ]
 
@@ -66,15 +68,35 @@ const setLocateInfos = () => {
 }
 
 const addForecastListItems = city => {
-    let counter = 1
+    console.log(city)
+    let todayCounter = 0
+    let tomorrowCounter = 0
     let cityTime = getCurrentTime(city)
 
     todayForecastList.innerHTML = null
+    tomorrowForecastList.innerHTML = null
 
     for(let i = cityTime; i < 24; i++) {
-        const forecastedDegrees = getForecastedDegrees(city, counter)
-        const icon = getDueForecastIcon(city, counter)
+        const forecastedDegrees = getForecastedDegrees(city, todayCounter)
+        const icon = getDueForecastIcon(city, todayCounter)
         const time = getForecastTime(i, cityTime)
+
+        const template = `
+        <li>
+            <p class="weather__forecast-degrees">${forecastedDegrees}°</p>
+            <img src="${icon}" alt="forecast-icon" />
+            <p class="weather__forecast-time">${i != cityTime ? time : 'Now'}</p>
+        </li>
+        `
+
+        todayForecastList.innerHTML += template
+        todayCounter++
+    }
+
+    for(let i = todayCounter; i < (24 + todayCounter); i++) {
+        const forecastedDegrees = getForecastedDegrees(city, i)
+        const icon = getDueForecastIcon(city, i)
+        const time = getForecastTime(tomorrowCounter, cityTime)
 
         const template = `
         <li>
@@ -84,8 +106,8 @@ const addForecastListItems = city => {
         </li>
         `
 
-        todayForecastList.innerHTML += template
-        counter++
+        tomorrowForecastList.innerHTML += template
+        tomorrowCounter++
     }
 }
 
@@ -97,12 +119,8 @@ const getDueForecastIcon = (city, hoursLeft) => {
     return `http://openweathermap.org/img/wn/${city.hourly[hoursLeft].weather[0].icon}.png`
 }
 
-const getForecastTime = (hour, cityTime) => {
-    if(hour == cityTime) {
-        return 'Now'
-    } else {
-        return (hour < 10 ? `0${hour}:00` : `${hour}:00`)
-    }
+const getForecastTime = hour => {
+    return (hour < 10 ? `0${hour}:00` : `${hour}:00`)
 }
 
 const toggleForecastExpansion = () => {
@@ -128,8 +146,10 @@ const setError = error => {
     }
 }
 
-forecastList.addEventListener('wheel', e => {
-    e.deltaY > 0 ? forecastList.scrollLeft += 100 : forecastList.scrollLeft -= 100
+forecastList.forEach(list => {
+    list.addEventListener('wheel', e => {
+        e.deltaY > 0 ? list.scrollLeft += 100 : list.scrollLeft -= 100
+    })
 })
 
 cityForm.addEventListener('submit', e => {
@@ -158,6 +178,21 @@ cityForm.addEventListener('submit', e => {
         .catch(error => setError(error))
     })
     .catch(error => setError(error))
+})
+
+forecastListChanger.forEach(option => {
+    option.addEventListener('click', e => {
+        forecastListChanger.forEach(item => item.parentElement.removeAttribute('active'))
+        e.target.parentElement.setAttribute('active', '')
+
+        if(e.target.innerText != 'Today') {
+            todayForecastList.style.display = 'none'
+            tomorrowForecastList.style.display = 'flex'
+        } else {
+            todayForecastList.style.display = 'flex'
+            tomorrowForecastList.style.display = 'none'
+        }
+    })
 })
 
 setLocateInfos()

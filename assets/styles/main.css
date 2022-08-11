@@ -211,6 +211,10 @@ header form button {
     overflow-x: scroll;
 }
 
+#weather .weather__forecast-menu .weather__forecast-list--tomorrow {
+    display: none;
+}
+
 #weather .weather__forecast-menu .weather__forecast-list::-webkit-scrollbar {
     display: none;
 }
