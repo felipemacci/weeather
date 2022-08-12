@@ -13,6 +13,7 @@ const currentClimate = document.querySelector('#weather .weather__climate')
 const todayForecastList = document.querySelector('.weather__forecast-list--today')
 const tomorrowForecastList = document.querySelector('.weather__forecast-list--tomorrow')
 
+const mainSection = document.getElementById('weather')
 const mainDisplay = [ currentCity, currentTemperature, currentClimate ]
 
 const changeInfo = (info, data) => {
@@ -68,10 +69,11 @@ const setLocateInfos = () => {
 }
 
 const addForecastListItems = city => {
-    console.log(city)
     let todayCounter = 0
     let tomorrowCounter = 0
     let cityTime = getCurrentTime(city)
+
+    setTimeBackground(cityTime)
 
     todayForecastList.innerHTML = null
     tomorrowForecastList.innerHTML = null
@@ -121,6 +123,18 @@ const getDueForecastIcon = (city, hoursLeft) => {
 
 const getForecastTime = hour => {
     return (hour < 10 ? `0${hour}:00` : `${hour}:00`)
+}
+
+const setTimeBackground = time => {
+    if(time >= 18) {
+        mainSection.style.backgroundImage = 'url("../assets/images/night.jpg")'
+    } else if(time >= 12) {
+        mainSection.style.backgroundImage = 'url("../assets/images/evening.jpg")'
+    } else if(time >= 6) {
+        mainSection.style.backgroundImage = 'url("../assets/images/day.jpg")'
+    } else {
+        mainSection.style.backgroundImage = 'url("../assets/images/dawn.jpg")'
+    }
 }
 
 const toggleForecastExpansion = () => {
@@ -196,3 +210,4 @@ forecastListChanger.forEach(option => {
 })
 
 setLocateInfos()
+setTimeBackground()
