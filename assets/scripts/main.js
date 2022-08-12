@@ -136,7 +136,7 @@ const addListItem = (list, info) => {
     <li>
         <p class="weather__forecast-degrees">${info.forecastedDegrees}°</p>
         <img src="${info.icon}" alt="forecast-icon" />
-        <p class="weather__forecast-time">${info.i != info.cityTime ? info.time : 'Now'}</p>
+        <p class="weather__forecast-time">${list == todayForecastList ? (info.i != info.cityTime ? info.time : 'Now') : info.time}</p>
     </li>
     `
 
