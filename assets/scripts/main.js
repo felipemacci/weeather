@@ -5,23 +5,54 @@ const forecastNavigation = document.querySelector('.weather__forecast')
 const forecastExpander = document.querySelector('.weather__forecast .weather__open-weather-menu')
 const forecastList = document.querySelectorAll('.weather__forecast-menu .weather__forecast-list')
 const forecastListChanger = document.querySelectorAll('#weather .weather__forecast-menu .weather__choose-day li a')
+const todayForecastList = document.querySelector('.weather__forecast-list--today')
+const tomorrowForecastList = document.querySelector('.weather__forecast-list--tomorrow')
 
 const currentCity = document.querySelector('#weather .weather__city')
 const currentTemperature = document.querySelector('#weather .weather__degrees')
 const currentClimate = document.querySelector('#weather .weather__climate')
 
-const todayForecastList = document.querySelector('.weather__forecast-list--today')
-const tomorrowForecastList = document.querySelector('.weather__forecast-list--tomorrow')
-
 const mainSection = document.getElementById('weather')
 const mainDisplay = [ currentCity, currentTemperature, currentClimate ]
 
-const changeInfo = (info, data) => {
-    if(info == currentCity && !cityInput.value) {
-        cityInput.value = data
-    }
+const setLocateInfos = () => {
+    navigator.geolocation.getCurrentPosition(position => {
+        const lat = position.coords.latitude
+        const lon = position.coords.longitude
 
-    info.innerText = data
+        const currentLocation = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=bcfaab6c78be19a12909f0a481f4da85`
+        const currentClimateData = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=bcfaab6c78be19a12909f0a481f4da85`
+
+        axios.get(currentLocation)
+        .then(res => {
+            const cityName = res.data[0].name
+
+            axios.get(currentClimateData)
+            .then(res => {
+                const data = res.data
+                data.cityName = cityName
+
+                handleForecastInfo(data)
+            })
+            .catch(error => setError(error))
+        })
+        .catch(error => setError(error))
+    })
+}
+
+const handleForecastInfo = city => {
+    const cityTime = getCurrentTime(city)
+
+    updateInfos(city)
+    setTimeBackground(cityTime)
+    createForecastListItems(city, cityTime)
+}
+
+const getCurrentTime = data => {
+    let currentTime = new Date().toLocaleString('pt-BR', { timeZone: data.timezone })
+    currentTime = parseInt(currentTime.split(' ')[1].slice(0, 2))
+
+    return currentTime
 }
 
 const updateInfos = data => {
@@ -34,46 +65,29 @@ const updateInfos = data => {
     currentInfo.forEach((_, index) => changeInfo(mainDisplay[index], currentInfo[index]))
 }
 
-const getCurrentTime = data => {
-    let currentTime = new Date().toLocaleString('pt-BR', { timeZone: `${data.timezone}` })
-    currentTime = parseInt(currentTime.split(' ')[1].slice(0, 2))
+const changeInfo = (info, data) => {
+    if(info == currentCity && !cityInput.value) {
+        cityInput.value = data
+    }
 
-    return currentTime
+    info.innerText = data
 }
 
-const setLocateInfos = () => {
-    navigator.geolocation.getCurrentPosition(position => {
-        const lat = position.coords.latitude
-        const lon = position.coords.longitude
-
-        const currentLocation = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=bcfaab6c78be19a12909f0a481f4da85`
-        const currentClimateData = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=bcfaab6c78be19a12909f0a481f4da85`
-
-        axios.get(currentLocation)
-        .then(res => {
-            const data = res.data
-            const cityName = data[0].name
-
-            axios.get(currentClimateData)
-            .then(res => {
-                const data = res.data
-                data.cityName = cityName
-
-                updateInfos(data)
-                addForecastListItems(data)
-            })
-            .catch(error => setError(error))
-        })
-        .catch(error => setError(error))
-    })
+const setTimeBackground = time => {
+    if(time >= 18) {
+        mainSection.style.backgroundImage = 'url("../assets/images/night.jpg")'
+    } else if(time >= 12) {
+        mainSection.style.backgroundImage = 'url("../assets/images/evening.jpg")'
+    } else if(time >= 6) {
+        mainSection.style.backgroundImage = 'url("../assets/images/day.jpg")'
+    } else {
+        mainSection.style.backgroundImage = 'url("../assets/images/dawn.jpg")'
+    }
 }
 
-const addForecastListItems = city => {
+const createForecastListItems = (city, cityTime) => {
     let todayCounter = 0
     let tomorrowCounter = 0
-    let cityTime = getCurrentTime(city)
-
-    setTimeBackground(cityTime)
 
     todayForecastList.innerHTML = null
     tomorrowForecastList.innerHTML = null
@@ -83,15 +97,11 @@ const addForecastListItems = city => {
         const icon = getDueForecastIcon(city, todayCounter)
         const time = getForecastTime(i, cityTime)
 
-        const template = `
-        <li>
-            <p class="weather__forecast-degrees">${forecastedDegrees}°</p>
-            <img src="${icon}" alt="forecast-icon" />
-            <p class="weather__forecast-time">${i != cityTime ? time : 'Now'}</p>
-        </li>
-        `
+        const info = {
+            todayForecastList, forecastedDegrees, icon, cityTime, time, i
+        }
 
-        todayForecastList.innerHTML += template
+        addListItem(todayForecastList, info)
         todayCounter++
     }
 
@@ -100,15 +110,11 @@ const addForecastListItems = city => {
         const icon = getDueForecastIcon(city, i)
         const time = getForecastTime(tomorrowCounter, cityTime)
 
-        const template = `
-        <li>
-            <p class="weather__forecast-degrees">${forecastedDegrees}°</p>
-            <img src="${icon}" alt="forecast-icon" />
-            <p class="weather__forecast-time">${time}</p>
-        </li>
-        `
+        const info = {
+            todayForecastList, forecastedDegrees, icon, cityTime, time, i
+        }
 
-        tomorrowForecastList.innerHTML += template
+        addListItem(tomorrowForecastList, info)
         tomorrowCounter++
     }
 }
@@ -125,16 +131,16 @@ const getForecastTime = hour => {
     return (hour < 10 ? `0${hour}:00` : `${hour}:00`)
 }
 
-const setTimeBackground = time => {
-    if(time >= 18) {
-        mainSection.style.backgroundImage = 'url("../assets/images/night.jpg")'
-    } else if(time >= 12) {
-        mainSection.style.backgroundImage = 'url("../assets/images/evening.jpg")'
-    } else if(time >= 6) {
-        mainSection.style.backgroundImage = 'url("../assets/images/day.jpg")'
-    } else {
-        mainSection.style.backgroundImage = 'url("../assets/images/dawn.jpg")'
-    }
+const addListItem = (list, info) => {
+    const template = `
+    <li>
+        <p class="weather__forecast-degrees">${info.forecastedDegrees}°</p>
+        <img src="${info.icon}" alt="forecast-icon" />
+        <p class="weather__forecast-time">${info.i != info.cityTime ? info.time : 'Now'}</p>
+    </li>
+    `
+
+    list.innerHTML += template
 }
 
 const toggleForecastExpansion = () => {
@@ -177,17 +183,16 @@ cityForm.addEventListener('submit', e => {
         const lat = data.coord.lat
         const lon = data.coord.lon
 
-        const climateData = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=bcfaab6c78be19a12909f0a481f4da85`
-
         const cityName = data.name
 
+        const climateData = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=bcfaab6c78be19a12909f0a481f4da85`
+        
         axios.get(climateData)
         .then(res => {
             const data = res.data
             data.cityName = cityName
 
-            updateInfos(data)
-            addForecastListItems(data)
+            handleForecastInfo(data)
         })
         .catch(error => setError(error))
     })
@@ -196,6 +201,8 @@ cityForm.addEventListener('submit', e => {
 
 forecastListChanger.forEach(option => {
     option.addEventListener('click', e => {
+        e.preventDefault()
+
         forecastListChanger.forEach(item => item.parentElement.removeAttribute('active'))
         e.target.parentElement.setAttribute('active', '')
 
