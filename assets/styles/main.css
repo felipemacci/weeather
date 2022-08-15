@@ -1,5 +1,6 @@
 :root {
     font-size: 10px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 * {
@@ -68,6 +69,7 @@ header form input {
 header form button {
     width: 4.5rem;
     height: 4.5rem;
+    background: rgb(233, 235, 238);
     border: none;
     border-top-right-radius: 2rem;
     border-bottom-right-radius: 2rem;
@@ -123,6 +125,10 @@ header form button {
 
 #weather .weather__forecast[aria-expanded="true"] {
     bottom: 0;
+}
+
+#weather .weather__forecast[aria-expanded="true"] .weather__open-weather-menu {
+    margin: 1rem;
 }
 
 #weather .weather__forecast[aria-expanded="true"] .weather__open-weather-menu i {
@@ -251,5 +257,39 @@ header form button {
 
     to {
         bottom: .5rem;
+    }
+}
+
+@media (max-width: 968px) {
+    :root {
+        font-size: 12px;
+    }
+
+    header {
+        height: auto;
+        padding: 1.6rem 0;
+    }
+
+    header .container {
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.6rem;
+    }
+
+    header form {
+        position: static;
+        transform: none;
+    }
+}
+
+@media (max-width: 540px) {
+    header form {
+        width: 100%;
+    }
+}
+
+@media (max-width: 390px) {
+    :root {
+        font-size: 9px;
     }
 }

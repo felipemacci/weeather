@@ -98,7 +98,7 @@ const createForecastListItems = (city, cityTime) => {
         const time = getForecastTime(i, cityTime)
 
         const info = {
-            todayForecastList, forecastedDegrees, icon, cityTime, time, i
+            forecastedDegrees, icon, cityTime, time, i
         }
 
         addListItem(todayForecastList, info)
@@ -111,7 +111,7 @@ const createForecastListItems = (city, cityTime) => {
         const time = getForecastTime(tomorrowCounter, cityTime)
 
         const info = {
-            todayForecastList, forecastedDegrees, icon, cityTime, time, i
+            forecastedDegrees, icon, cityTime, time, i
         }
 
         addListItem(tomorrowForecastList, info)
@@ -143,14 +143,6 @@ const addListItem = (list, info) => {
     list.innerHTML += template
 }
 
-const toggleForecastExpansion = () => {
-    if(forecastNavigation.getAttribute('aria-expanded') == 'false') {
-        forecastNavigation.setAttribute('aria-expanded', 'true')
-    } else {
-        forecastNavigation.setAttribute('aria-expanded', 'false')
-    }
-}
-
 const setError = error => {
     if(error.response) {
         switch(error.response.status) {
@@ -163,6 +155,14 @@ const setError = error => {
             default:
                 alert('An unexpected error has occurred! Try again later.')
         }
+    }
+}
+
+const toggleForecastExpansion = () => {
+    if(forecastNavigation.getAttribute('aria-expanded') == 'false') {
+        forecastNavigation.setAttribute('aria-expanded', 'true')
+    } else {
+        forecastNavigation.setAttribute('aria-expanded', 'false')
     }
 }
 
